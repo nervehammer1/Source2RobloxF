@@ -879,9 +879,16 @@ namespace Source2Roblox.Geometry
                         {
                             foreach (var vert in meshFile.Verts)
                             {
-                                objWriter.WriteLine($"v {vert.Position.X:F6} {vert.Position.Y:F6} {vert.Position.Z:F6}");
+                                // Apply 180-degree rotation to vertices (flip X/Z)
+                                float rotatedX = -vert.Position.X;
+                                float rotatedZ = -vert.Position.Z;
+                                objWriter.WriteLine($"v {rotatedX:F6} {vert.Position.Y:F6} {rotatedZ:F6}");
                                 objWriter.WriteLine($"vt {vert.UV.X:F6} {vert.UV.Y:F6}");
-                                objWriter.WriteLine($"vn {vert.Normal.X:F6} {vert.Normal.Y:F6} {vert.Normal.Z:F6}");
+
+                                // Apply same rotation to normals
+                                float normalX = -vert.Normal.X;
+                                float normalZ = -vert.Normal.Z;
+                                objWriter.WriteLine($"vn {normalX:F6} {vert.Normal.Y:F6} {normalZ:F6}");
                             }
 
                             foreach (var face in mesh.Faces)

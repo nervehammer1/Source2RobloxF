@@ -435,7 +435,7 @@ namespace Source2Roblox.Geometry
                     if (bone.Parent == null)
                         bone.Parent = largestPart;
 
-                    bone.CFrame -= largestPart.Position;
+                    bone.CFrame -= largestPart.CFrame.Position;
                 }
             }
             else
@@ -497,7 +497,7 @@ namespace Source2Roblox.Geometry
                 if (bone.Parent is Bone parent)
                     continue;
 
-                bone.CFrame -= largestPart.Position;
+                bone.CFrame -= largestPart.CFrame.Position;
             }
 
             string exportPath = Path.Combine(rootWorkDir, modelDir, $"{modelName}.rbxm");
@@ -870,11 +870,7 @@ namespace Source2Roblox.Geometry
                         foreach (var vert in meshFile.Verts)
                             vert.Position -= origin;
 
-<<<<<<< HEAD
                         meshFile.Save(meshStream);
-=======
-                    assetManager.BindAssetId($"maps/{mapName}/{meshName}", uploadPool, meshPart, "MeshId");
->>>>>>> parent of ab42fb7 (Nuke AssetManager)
 
                         // Generate OBJ
                         string objFileName = Path.ChangeExtension(currentMeshName, ".obj");
@@ -924,7 +920,6 @@ namespace Source2Roblox.Geometry
                                 entityModels[entity] = entModel;
                             }
 
-<<<<<<< HEAD
                             if (entity.ClassName == "func_illusionary" || entity.ClassName == "func_brush")
                             {
                                 var noShadows = entity.GetInt("disableshadows");
@@ -959,35 +954,12 @@ namespace Source2Roblox.Geometry
                             }
 
                             meshPart.Parent = entModel;
-=======
-                            vmt.SaveVTF(diffuse, sourceDir);
-                            assetManager.BindAssetId(diffuse, uploadPool, surface, "ColorMap");
-                        }
-                        
-                        if (!string.IsNullOrEmpty(bump))
-                        {
-                            vmt.SaveVTF(bump, sourceDir, true);
-                            assetManager.BindAssetId(bump, uploadPool, surface, "NormalMap");
->>>>>>> parent of ab42fb7 (Nuke AssetManager)
                         }
 
                         if (meshPart.Parent == null)
                             meshPart.Parent = workspace;
 
-<<<<<<< HEAD
                         assetManager.BindAssetId($"maps/{mapName}/{currentMeshName}", uploadPool, meshPart, "MeshId");
-=======
-                        if (vmt.EnvMap)
-                        {
-                            assetManager.BindAssetId(ENV_DARK, uploadPool, surface, "RoughnessMap");
-                            assetManager.BindAssetId(ENV_LIGHT, uploadPool, surface, "MetalnessMap");
-                        }
-                        else
-                        {
-                            assetManager.BindAssetId(ENV_DARK, uploadPool, surface, "MetalnessMap");
-                            assetManager.BindAssetId(ENV_LIGHT, uploadPool, surface, "RoughnessMap");
-                        }
->>>>>>> parent of ab42fb7 (Nuke AssetManager)
 
                         if (materialSets.TryGetValue(material, out var vmt))
                         {
@@ -1226,7 +1198,7 @@ namespace Source2Roblox.Geometry
 
                 foreach (var part in model.GetDescendantsOfType<BasePart>())
                 {
-                    var position = part.Position;
+                    var position = part.CFrame.Position;
                     partTree.CreateNode(position, part);
                 }
             }

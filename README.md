@@ -18,7 +18,7 @@ This program is not user-friendly and will not be made easier to use.<br/> But i
 1. You'll need to install the [Roblox Studio Mod Manager](https://github.com/MaximumADHD/Roblox-Studio-Mod-Manager) since the program currently targets `%localappdata%\Roblox Studio\content` for deploying local files.
 2. Install [Visual Studio 2019](https://c2rsetup.officeapps.live.com/c2r/downloadVS.aspx?sku=community&channel=Release&source=VSLandingPage&version=VS2019&cid=2030) with `Visual C#` and `.NET Framework 4.7.2`
 3. Clone the following GitHub repositories into a single directory on your file system:
-   - https://github.com/nervehammer1/Source2Roblox
+   - https://github.com/nervehammer1/Source2RobloxF
    - https://github.com/MaximumADHD/ValveKeyValue
    - https://github.com/MaximumADHD/Roblox-File-Format
    - They should look like this:

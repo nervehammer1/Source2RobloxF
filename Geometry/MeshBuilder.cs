@@ -484,6 +484,41 @@ namespace Source2Roblox.Geometry
                     Console.WriteLine($"\tWrote {meshPath}");
                 }
 
+                // Add OBJ export with rotation
+                string objPath = Path.Combine(meshWorkDir, $"{name}.obj");
+                using (var objWriter = new StreamWriter(objPath))
+                {
+                    // Write rotated vertices
+                    foreach (var vert in meshFile.Verts)
+                    {
+                        // Apply 180 degree rotation (flip X and Z)
+                        float rotatedX = -vert.Position.X;
+                        float rotatedZ = -vert.Position.Z;
+
+                        objWriter.WriteLine($"v {rotatedX:F6} {vert.Position.Y:F6} {rotatedZ:F6}");
+
+                        // Inverted V coordinate for UVs
+                        objWriter.WriteLine($"vt {vert.UV.X:F6} {1 - vert.UV.Y:F6}"); // Flip V component
+
+
+                        // Rotate normals to match
+                        float normalX = -vert.Normal.X;
+                        float normalZ = -vert.Normal.Z;
+                        objWriter.WriteLine($"vn {normalX:F6} {vert.Normal.Y:F6} {normalZ:F6}");
+                    }
+
+                    // Write faces (using first mesh in file)
+                    var mesh = meshFile.Meshes.First();
+                    foreach (var face in mesh.Faces)
+                    {
+                        objWriter.WriteLine("f {0}/{0}/{0} {1}/{1}/{1} {2}/{2}/{2}",
+                            face[0] + 1,  // OBJ uses 1-based indices
+                            face[1] + 1,
+                            face[2] + 1);
+                    }
+                }
+                Console.WriteLine($"\tWrote {objPath}");
+
                 assetManager.BindAssetId($"{meshDir}/{name}.mesh", uploadPool, meshPart, "MeshId");
             }
 
@@ -883,7 +918,8 @@ namespace Source2Roblox.Geometry
                                 float rotatedX = -vert.Position.X;
                                 float rotatedZ = -vert.Position.Z;
                                 objWriter.WriteLine($"v {rotatedX:F6} {vert.Position.Y:F6} {rotatedZ:F6}");
-                                objWriter.WriteLine($"vt {vert.UV.X:F6} {vert.UV.Y:F6}");
+                                // Inverted V coordinate for UVs
+                                objWriter.WriteLine($"vt {vert.UV.X:F6} {1 - vert.UV.Y:F6}"); // Flip V component
 
                                 // Apply same rotation to normals
                                 float normalX = -vert.Normal.X;
